@@ -1,6 +1,7 @@
 import pygame
 
 from settings import *
+from player import Player
 
 
 class Game():
@@ -12,6 +13,8 @@ class Game():
         
         self.is_running: bool
         self.dt: float
+        
+        self.player = Player()
     
     
     def events(self) -> None:
@@ -21,11 +24,13 @@ class Game():
     
     
     def update(self) -> None:
-        pass
+        self.player.update()
     
     
     def draw(self) -> None:
         self.window.fill(0)
+        
+        self.player.draw()
         
         pygame.display.flip()
     
