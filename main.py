@@ -2,6 +2,7 @@ import pygame
 
 from settings import *
 from player import Player
+from enemy import Enemy
 
 
 class Game():
@@ -12,9 +13,11 @@ class Game():
         pygame.display.set_caption('Pygame @ h4sski')
         
         self.is_running: bool
-        self.dt: float
+        self.screen = pygame.Surface(RESOLUTION)
+        # self.dt: float
         
         self.player = Player()
+        self.enemy = Enemy()
     
     
     def events(self) -> None:
@@ -25,12 +28,15 @@ class Game():
     
     def update(self) -> None:
         self.player.update()
+        self.enemy.update(self.player)
     
     
     def draw(self) -> None:
         self.window.fill(0)
         
-        self.player.draw()
+        self.enemy.draw(self.window)
+        self.player.draw(self.window)
+        
         
         pygame.display.flip()
     
@@ -43,6 +49,9 @@ class Game():
             self.draw()
             self.clock.tick(FPS)
         pygame.quit()
+
+
+########################################
 
 if __name__ == '__main__':
     game = Game()
