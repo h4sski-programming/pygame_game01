@@ -1,19 +1,25 @@
 import pygame
 
 from settings import *
+from sprite_custom import SpriteDrawable
 
 
-class Player(pygame.sprite.Sprite):
+class Player(SpriteDrawable):
     def __init__(self) -> None:
-        super().__init__()
+        super().__init__(
+            x = RESOLUTION[0]/2 - TILE_SIZE/2,
+            y = RESOLUTION[1]/2 - TILE_SIZE/2,
+            width = TILE_SIZE * 0.6,
+            height = TILE_SIZE * 0.6,
+            color = PLAYER_COLOR
+        )
         
-        self.x = RESOLUTION[0]/2
-        self.y = RESOLUTION[1]/2
-        self.color = PLAYER_COLOR
-        
-        self.image = pygame.Surface((TILE_SIZE, TILE_SIZE))
-        # self.image.fill('green')
-        self.rect = self.image.get_rect(center=(self.x, self.y))
-        
-    def draw(self, surface: pygame.Surface) -> None:
-        pygame.draw.rect(surface, self.color, self.rect)
+        self.move_up: bool = False
+        self.move_down: bool = False
+        self.move_left: bool = False
+        self.move_right: bool = False
+    
+    def update(self, dt: float) -> None:
+        super().update(self)
+        if self.move_up:
+            self.y -= 1
