@@ -27,14 +27,12 @@ class Game():
             if event.type == pygame.QUIT:
                 self.is_running = False
             
-            if event.type == pygame.KEYDOWN:
-                keys = pygame.key.get_pressed()
-                if keys[pygame.K_w]:
-                    self.player.move_up = True
-        
-        # keys = pygame.key.get_pressed()
-        # if keys[pygame.K_w]:
-        #     self.player.move_up = True
+            # if event.type == pygame.KEYDOWN:
+        keys = pygame.key.get_pressed()
+        self.player.move_up = True if keys[pygame.K_w] else False
+        self.player.move_down = True if keys[pygame.K_s] else False
+        self.player.move_left = True if keys[pygame.K_a] else False
+        self.player.move_right = True if keys[pygame.K_d] else False
         
     
     

@@ -23,16 +23,17 @@ class Enemy(SpriteMovable, SpriteDrawable):
         
     
     def raycast(self, player: Player, tilemap: TileMap) -> bool:
-        dx = player.x - self.x
-        dy = player.y - self.y
+        x_current = self.x + self.width/2
+        y_current = self.y + self.height/2
+        self.raycast_start_pos = [x_current, y_current]
+        dx = player.x+player.width/2 - x_current
+        dy = player.y+player.height/2 - y_current
         
         distance = math.sqrt(dx**2 + dy**2)
         
         dx /= distance
         dy /= distance
         
-        x_current = self.x
-        y_current = self.y
         
         answer = True
         for _ in range(int(distance)):
@@ -49,4 +50,5 @@ class Enemy(SpriteMovable, SpriteDrawable):
         return answer
     
     def draw_raycast(self, surface: pygame.Surface) -> None:
-        pygame.draw.line(surface, self.color, (self.x, self.y), self.raycast_end_pos)
+        pygame.draw.line(surface, self.color, self.raycast_start_pos, self.raycast_end_pos)
+        pass

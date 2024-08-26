@@ -23,3 +23,10 @@ class Player(SpriteDrawable):
         super().update(self)
         if self.move_up:
             self.y -= 1
+        if self.move_down:
+            self.y += 1
+        if self.move_left:
+            self.x -= 1
+        if self.move_right:
+            self.x += 1
+        
