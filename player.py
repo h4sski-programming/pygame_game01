@@ -7,10 +7,10 @@ from sprite_custom import SpriteDrawable
 class Player(SpriteDrawable):
     def __init__(self) -> None:
         super().__init__(
-            x = RESOLUTION[0]/2 - TILE_SIZE/2,
-            y = RESOLUTION[1]/2 - TILE_SIZE/2,
-            width = TILE_SIZE * 0.6,
-            height = TILE_SIZE * 0.6,
+            x = 520,
+            y = 490,
+            width = PLAYER_SIZE,
+            height = PLAYER_SIZE,
             color = PLAYER_COLOR
         )
         
@@ -20,7 +20,7 @@ class Player(SpriteDrawable):
         self.move_right: bool = False
     
     def update(self, dt: float) -> None:
-        super().update(self)
+        super().update()
         if self.move_up:
             self.y -= 1
         if self.move_down:

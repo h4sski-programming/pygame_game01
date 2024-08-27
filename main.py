@@ -38,6 +38,7 @@ class Game():
     
     def update(self) -> None:
         # self.player.update(self.dt)
+        self.tile_map.update()
         self.enemy.update(self.dt, self.player, self.tile_map)
         self.player.update(self.dt)
     

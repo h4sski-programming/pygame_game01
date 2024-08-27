@@ -32,7 +32,14 @@ class SpriteDrawable(SpriteBase):
         self.color = color
         self.image = pygame.Surface((self.width, self.height))
         self.image.fill(self.color)
-        self.rect = self.image.get_rect(center=(self.x, self.y))
+        self.rect = self.image.get_rect(left=self.x, top=self.y)
+    
+    
+    def update(self) -> None:
+        self.rect = self.image.get_rect(left=self.x, top=self.y)
+        
         
     def draw(self, surface: pygame.Surface) -> None:
-        surface.blit(self.image, (self.x, self.y))
+        pygame.draw.circle(surface, self.color, (self.x, self.y), self.width/2)
+        # surface.blit(self.image, (self.x, self.y))
+        # pygame.draw.rect(surface, 'white', self.rect, 3)
