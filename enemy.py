@@ -73,11 +73,14 @@ class Enemy(SpriteMovable, SpriteDrawable):
             
             
             enemy_map_pos = np.array([self.x, self.y])
-            enemy_tile_pos = np.array([self.x % TILE_SIZE, self.y % TILE_SIZE])
+            enemy_tile_pos = enemy_map_pos % TILE_SIZE
             
             # vertical lines
             first_vert_dx = TILE_SIZE - enemy_tile_pos[0] if cos_a>0 else enemy_tile_pos[0]*-1
             first_vert_dy = first_vert_dx * tan_a
+            
+            first_vert_dx = first_vert_dx if tilemap.in_map_width(first_vert_dx + self.position[0]) else RESOLUTION[0]-1
+            first_vert_dy = first_vert_dy if tilemap.in_map_height(first_vert_dy + self.position[1]) else RESOLUTION[1]-1
             first_vert_pos = np.array([first_vert_dx, first_vert_dy])
             
             # horizontal lines
@@ -85,10 +88,11 @@ class Enemy(SpriteMovable, SpriteDrawable):
             first_hor_dx = first_hor_dy / tan_a
             first_hor_pos = np.array([first_hor_dx, first_hor_dy])
             
-            if not tilemap.rect.collidepoint(first_vert_pos.tolist()):
-                continue
-            if tilemap.is_tile_a_wall(first_vert_pos.tolist()[:]):
-                pygame.draw.line(tilemap, 'purple', enemy_map_pos.tolist(), first_vert_pos.tolist())
+            # if not tilemap.rect.collidepoint(first_vert_pos.tolist()):
+            #     continue
+            if tilemap.is_tile_a_wall(first_vert_pos):
+                end_line = first_hor_pos + self.position
+                pygame.draw.line(tilemap, 'purple', enemy_map_pos.tolist(), end_line.tolist())
                 continue
             
             

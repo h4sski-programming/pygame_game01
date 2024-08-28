@@ -40,7 +40,8 @@ class Game():
         # self.player.update(self.dt)
         self.tile_map.update()
         self.enemy.update(self.dt, self.player, self.tile_map)
-        self.player.update(self.dt)
+        # self.player.update(self.dt)
+        self.player.update(self.dt, self.tile_map)      # for testing and debug purpose
     
     
     def draw(self) -> None:

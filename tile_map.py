@@ -30,7 +30,9 @@ class TileMap(pygame.Surface):
         super().__init__(RESOLUTION)
         
         self.tiles: list = []
-        self.tiles_dict: dict = {}
+        self.tiles_dict: dict = {
+            
+        }
         self.generate_map()
         self.draw_tiles()
         self.map_grid = map_01
@@ -56,14 +58,23 @@ class TileMap(pygame.Surface):
                 # else:
                 #     tile = Tile01(x=col, y=row)
                 self.tiles.append(Tile00(x=col, y=row) if map_01[row][col] == 0 else Tile01(x=col, y=row))
+                # self.tiles.append(Tile00(x=col, y=row) if map_01[row][col] == 0 else Tile01(x=col, y=row))
+    
+    def get_tile_coords(self, position: list) -> list:
+        return [math.floor(pos/TILE_SIZE) for pos in position]
     
     def is_tile_a_wall(self, coords: list) -> bool:
-        tile_position = [math.floor(coord/TILE_SIZE) for coord in coords]
+        print(coords)
+        tile_position = self.get_tile_coords(coords)
         print(tile_position)
-        answer = self.map_grid[tile_position[0]][tile_position[1]] == 0
-        print(answer)
-        return False
-        
+        return self.map_grid[tile_position[1]][tile_position[0]] == 0
+    
+    def in_map_width(self, x: float) -> bool:
+        return 0 <= x <= RESOLUTION[0]
+    
+    def in_map_height(self, y: float) -> bool:
+        return 0 <= y <= RESOLUTION[1]
+    
         
 class Tile(pygame.Surface):
     def __init__(self, x: int, y: int, color: tuple, width: int = TILE_SIZE, height: int = TILE_SIZE) -> None:

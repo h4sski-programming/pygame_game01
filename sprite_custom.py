@@ -1,5 +1,6 @@
 import pygame
 import math
+import numpy as np
 
 
 
@@ -7,6 +8,7 @@ class SpriteBase(pygame.sprite.Sprite):
     def __init__(self, x: float, y: float, **kwargs) -> None:
         self.x: int = x
         self.y: int = y
+        self.position = np.array([self.x, self.y])
 
 
 class SpriteMovable(SpriteBase):
@@ -14,6 +16,10 @@ class SpriteMovable(SpriteBase):
         super().__init__(x=x, y=y, **kwargs)
         self.velocity: float = velocity
         self.move: bool = False
+    
+    def update(self) -> None:
+        super().update()
+        self.position = np.array([self.x, self.y])
     
     def move_towards(self, destination: tuple, dt: float) -> None:
         dx = destination[0] - self.x
@@ -36,6 +42,7 @@ class SpriteDrawable(SpriteBase):
     
     
     def update(self) -> None:
+        super().update()
         self.rect = self.image.get_rect(left=self.x, top=self.y)
         
         
